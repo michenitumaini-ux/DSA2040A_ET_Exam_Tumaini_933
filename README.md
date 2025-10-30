@@ -94,9 +94,6 @@ Below are sample outputs from the ETL process.
 
 ## Load & Verification
 
-###Load phase Output
-![Transform Output](screenshots/load_output.png)
-
 ### Format Used
 For the Load phase, I used **SQLite** to store the transformed data.  
 A database file named `full_data.db` was created in the `loaded` folder.
