@@ -1,7 +1,7 @@
-🧩 ETL Exam Project — COVID-19 Data
+ ETL Exam Project — COVID-19 Data
 
 
-1. 📘 Project Overview
+1.  Project Overview
 
 This project demonstrates the ETL (Extract, Transform, Load) process using a real-world dataset.
 The goal is to extract, clean, and transform COVID-19 data from Kaggle to prepare it for further analysis.
@@ -12,14 +12,14 @@ Extract: Load and validate raw and incremental datasets.
 
 Transform: Clean, standardize, and structure the validated data for analysis.
 
-2. 🌐 Data Source
+2.  Data Source
 
 Dataset: Our World in Data — COVID-19 Dataset
 
 Description:
 The dataset contains global COVID-19 statistics such as confirmed cases, deaths, tests, hospitalizations, and vaccinations by date and country.
 
-3. ⚙️ ET Phases
+3.  ET Phases
 🔹 Extract Phase (etl_extract.ipynb)
 
 Loaded raw_data.csv and incremental_data.csv using Pandas.
@@ -46,7 +46,7 @@ Categorized data where necessary and saved outputs to /transformed/.
 
 Generated summary statistics for verification.
 
-4. 🧰 Tools Used
+4.  Tools Used
 
 Python 3.11
 
@@ -56,7 +56,7 @@ Jupyter Notebook — documentation and execution
 
 OS library — file path management
 
-5. 🚀 Steps to Run the Project
+5.  Steps to Run the Project
 
 Clone or Download this project folder.
 
@@ -82,7 +82,7 @@ Run all cells in order.
 
 Check the /data/ and /transformed/ folders for saved outputs.
 
-6. 🖼️ Sample Outputs / Screenshots
+6.  Sample Outputs / Screenshots
 
 Below are sample outputs from the ETL process.
 
@@ -91,3 +91,37 @@ Below are sample outputs from the ETL process.
 
 ### Transform Phase Output
 ![Transform Output](screenshots/transform_output.png)
+
+## Load & Verification
+
+###Load phase Output
+![Transform Output](screenshots/load_output.png)
+
+### Format Used
+For the Load phase, I used **SQLite** to store the transformed data.  
+A database file named `full_data.db` was created in the `loaded` folder.
+
+### Verification
+After loading, I verified that the data was correctly inserted into the database by previewing the first few records.
+
+```python
+import pandas as pd
+import sqlite3
+
+conn = sqlite3.connect('loaded/full_data.db')
+preview = pd.read_sql('SELECT * FROM full_data LIMIT 5', conn)
+preview
+Output Preview:
+
+iso_code	continent	location	date	total_cases	total_deaths
+AFG	Asia	Afghanistan	2020-02-24	5.0	57664.07353
+AFG	Asia	Afghanistan	2020-02-25	5.0	57664.07353
+
+A screenshot of this output is saved as screenshots/load_output.png.
+
+Issues Faced and Solutions
+Issue: The transformed CSV files were initially empty.
+Solution: Restarted the Jupyter kernel and re-ran the transformation notebook (etl_transform.ipynb) to regenerate the data.
+
+Issue: The database connection failed once due to an incorrect path.
+Solution: Confirmed the working directory using os.getcwd() and used relative paths (e.g., loaded/full_data.db).
